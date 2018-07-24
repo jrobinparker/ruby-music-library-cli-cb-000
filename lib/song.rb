@@ -1,18 +1,18 @@
 class Song
+
   attr_accessor :name
 
   @@all = []
 
-  def initialize(name, artist = self.artist, genre = self.genre)
+  def initialize(name, artist = artist, genre = genre)
     @name = name
-    @artist = artist
-    @genre = genre
+    self.artist=(artist)
+    self.genre=(genre)
     @@all << self
   end
 
   def artist=(artist)
     @artist = artist
-    artist.add_song(self)
   end
 
   def artist
@@ -21,12 +21,6 @@ class Song
 
   def genre=(genre)
     @genre = genre
-    if @genre.song.nil?
-      @genre.song = self
-      unless @genre.songs.include?(self)
-        @genre.songs << self
-      end
-    end
   end
 
   def genre
@@ -58,10 +52,15 @@ class Song
   end
 
   def self.new_from_filename(filename)
-    artist_name = filename.split(" - ")[0].chomp
-    song_name = filename.split(" - ")[1].chomp
-    song = Song.new(name = song_name, artist = artist_name)
-    song
+      artist, name = filename.split(" - ")
+      song = Song.new(name, artist)
+      song
+  end
+
+  def self.create_from_filename(filename)
+    new_song = self.new_from_filename(filename)
+    new_song.artist_name = artist
+    new_song
   end
 
 end

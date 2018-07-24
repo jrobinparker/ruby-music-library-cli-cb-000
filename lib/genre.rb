@@ -1,4 +1,6 @@
 class Genre
+  extend Concerns::Findable
+
   attr_accessor :name, :song
   attr_reader :songs
 
@@ -28,14 +30,14 @@ class Genre
 
   def genre_artists
     Song.all.select do |song|
-      song.artist.genre == self
+      song.genre == self
     end
   end
 
   def artists
     uniq_array = []
-    genre_artists.map do |artist|
-      uniq_array << artist.genre
+    genre_artists.map do |song|
+      uniq_array << song.artist
     end
     uniq_array.uniq
   end

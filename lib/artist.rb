@@ -1,4 +1,6 @@
 class Artist
+  extend Concerns::Findable
+
   attr_accessor :name, :song
   attr_reader :songs
 
@@ -31,8 +33,9 @@ class Artist
   end
 
   def add_song(song)
-    if song.artist.nil?
-      song.artist = self
+    @song = song
+    if @song.artist.nil?
+      @song.artist = self
       unless self.songs.include?(song)
         self.songs << song
       end
