@@ -42,4 +42,8 @@ class Genre
     uniq_array.uniq
   end
 
+  def songs
+    @songs
+  end 
+
 end

@@ -21,6 +21,11 @@ class Song
 
   def genre=(genre)
     @genre = genre
+    Genre.all.select do |song|
+      unless genre.songs.include?(self)
+        genre.songs << self
+      end
+    end
   end
 
   def genre
@@ -53,7 +58,8 @@ class Song
 
   def self.new_from_filename(filename)
       artist, name = filename.split(" - ")
-      song = Song.new(name, artist)
+      song = Song.new(artist)
+      song.name = name
       song
   end
 
